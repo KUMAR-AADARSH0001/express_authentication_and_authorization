@@ -6,7 +6,7 @@ const SECRET_KEY = "NOTESAPI";
 // SIGNIN
 const resetPassword = async (req, res) => {
   // GETING EMAIL AND PASSWORD FROM USER INPUT
-  const { email, password } = req.body;
+  const { email, password1, password2 } = req.body;
   try {
     // CHECKING USER IN USER DATABASE
     const existUser = await userModel.findOne({ email: email });
@@ -15,16 +15,25 @@ const resetPassword = async (req, res) => {
       res.status(404).json({ message: "User Not Found" });
     }
     // CREATING HASHPASSWORD TO USER INPUT PASSWORD TO COMPARE FROM DATABASE
-    const matchPassword = await bcrypt.compare(password, existUser.password);
-    // CHECKING PASSWORD IS SAME AS IN DATABASE
-    if (!matchPassword) {
-      res.status(400).json({ message: "Invalid Password" });
+    if (password1 === password2) {
+      // CREATING HASHPASSWORD TO USER INPUT PASSWORD TO SAVE TO DATABASE
+      const hashPassword = await bcrypt.hash(password2, 12);
+      // CREATING USER FROM THEIR GIVING DETAILS
+      const result = await userModel.updateOne({
+        email: email,
+        password: hashPassword,
+      });
+      // CREATING TOKEN FOR USER TO RESET PASSWORD
+      const token = jwt.sign(
+        { email: result.email, id: result._id },
+        SECRET_KEY
+      );
+      res.status(201).json({
+        user: result,
+        token: token,
+        message: "Password Reset Successfully...",
+      });
     }
-    // CREATING TOKEN FOR USER TO SINGIN
-    const token = jwt.sign(
-      { email: existUser.email, id: existUser._id },
-      SECRET_KEY
-    );
     res.status(201).json({ user: existUser, token: token });
   } catch (error) {
     // IF ANYTHING GOT WRONG IT WILL RETURN
