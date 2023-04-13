@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "NOTESAPI";
 
 // SIGNUP
-const signUP = async (req, res) => {
+const SignUP = async (req, res) => {
   // GETTING USERNAME, EMAIL, PASSWORD FROM BODY
   const { username, email, password } = req.body;
   try {
@@ -34,4 +34,4 @@ const signUP = async (req, res) => {
   }
 };
 
-module.exports = { signUP };
+module.exports = { SignUP };

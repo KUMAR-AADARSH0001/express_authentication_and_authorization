@@ -1,14 +1,14 @@
 const express = require("express");
 const userRoutes = express.Router();
-const { signUP } = require("../controllers/signUP");
-const { signIN } = require("../controllers/signIN.js");
-const { changePassword } = require("../controllers/changePassword.js");
-const { resetPassword } = require("../controllers/resetPassword.js");
+const { SignUP } = require("../controllers/SignUP.js");
+const { SignIN } = require("../controllers/SignIN.js");
+const { ChangePassword } = require("../controllers/ChangePassword.js");
+const { ResetPassword } = require("../controllers/ResetPassword.js");
 
-// ALL ROUTES OF THIS PROJECT
-userRoutes.post("/signup", signUP);
-userRoutes.post("/signin", signIN);
-userRoutes.post("/changepassword", changePassword);
-userRoutes.post("/forgotpassword", resetPassword);
+// ALL ROUTES OF AUTHENTICATION
+userRoutes.post("/signup", SignUP);
+userRoutes.post("/signin", SignIN);
+userRoutes.post("/changepassword", ChangePassword);
+userRoutes.post("/forgotpassword", ResetPassword);
 
-module.exports = userRoutes;
+module.exports = { userRoutes };

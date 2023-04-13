@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const SECRET_KEY = "NOTESAPI";
 
 // SIGNIN
-const resetPassword = async (req, res) => {
+const ResetPassword = async (req, res) => {
   // GETING EMAIL AND PASSWORD FROM USER INPUT
   const { email, password1, password2 } = req.body;
   try {
@@ -37,9 +37,8 @@ const resetPassword = async (req, res) => {
     res.status(201).json({ user: existUser, token: token });
   } catch (error) {
     // IF ANYTHING GOT WRONG IT WILL RETURN
-    console.log(error);
     res.status(500).json({ message: "Somthing went wrong" });
   }
 };
 
-module.exports = { resetPassword };
+module.exports = { ResetPassword };
