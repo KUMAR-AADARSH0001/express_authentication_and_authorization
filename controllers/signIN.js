@@ -21,10 +21,7 @@ const SignIN = async (req, res) => {
       res.status(400).json({ message: "Invalid Password" });
     }
     // CREATING TOKEN FOR USER TO SINGIN
-    const token = jwt.sign(
-      { email: existUser.email, id: existUser._id },
-      SECRET_KEY
-    );
+    const token = jwt.sign({ email: email, _id: existUser._id }, SECRET_KEY);
     res.status(201).json({
       user: existUser,
       token: token,
@@ -32,7 +29,6 @@ const SignIN = async (req, res) => {
     });
   } catch (error) {
     // IF ANYTHING GOT WRONG IT WILL RETURN
-    console.log(error);
     res.status(500).json({ message: "Somthing went wrong" });
   }
 };
