@@ -1,4 +1,4 @@
-const userModel = require("../models/userSchema.js");
+const userModel = require("../models/UserSchema.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const SECRET_KEY = "NOTESAPI";
