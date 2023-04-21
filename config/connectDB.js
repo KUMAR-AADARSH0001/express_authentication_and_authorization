@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
-const connectDB = (DATABASE_URL) => {
+const connectDB = async (DATABASE_URL) => {
   try {
     const DB_OPTIONS = {
       dbName: "Authentication",
     };
-    mongoose.connect(DATABASE_URL, DB_OPTIONS, {
+    await mongoose.connect(DATABASE_URL, DB_OPTIONS, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     });

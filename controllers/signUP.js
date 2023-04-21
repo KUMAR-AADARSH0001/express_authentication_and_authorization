@@ -22,7 +22,7 @@ const SignUP = async (req, res) => {
       password: hashPassword,
     });
     // CREATING TOKEN FOR USER TO SINGUP
-    const token = jwt.sign({ email: email, _id: result._id }, SECRET_KEY);
+    const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY);
     res.status(201).json({
       user: result,
       token: token,
