@@ -9,7 +9,6 @@ const FileUploader = multer({
     filename: (req, file, cb) => {
       // THIS IS USED FOR CHANGING YOUR FILE INFO
       cb(null, Date.now() + file.originalname);
-      console.log("object file uploading done...");
     },
   }),
   //  TAKING KEY FROM PSTMAN WHERE FILE COME

@@ -5,7 +5,6 @@ const UploadPosts = async (req, res) => {
   try {
     const email = req.payload.email;
     const existUser = await userModel.find({ email: email });
-    console.log(existUser);
     // CHECKING USER IS EXISTING USER OR NOT
     if (!existUser) {
       res.status(404).json({ message: "User Not Found" });
@@ -22,11 +21,9 @@ const UploadPosts = async (req, res) => {
         mentionedTo: req.body.mentionedTo,
       });
       const savePost = uplaod.save();
-      console.log(savePost);
-      res.status(200).json({
-        msg: "Post Uploaded Successfully",
-        data: uplaod,
-      });
+      const filePath = req.body.filePath;
+      const maindir = process.cwd();
+      res.sendFile(`${maindir}/uploads/${filePath}`);
     }
   } catch (error) {
     res.status(400).json({

@@ -20,6 +20,7 @@ const ResetPassword = async (req, res) => {
       const result = await userModel.updateOne({
         password: hashPassword,
       });
+      await result.save();
       res.status(201).json({
         success: true,
         message: "Password Reset Successfully...",
