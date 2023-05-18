@@ -1,11 +1,11 @@
-const CreateRoomSchema = require("../models/CreateRoomSchema.js");
+const RoomSchema = require("../models/RoomSchema.js");
 
 //  MESSAGE CONTROLER
 const MessagesRoom = async (req, res) => {
   try {
     sendBy = req.payload.id;
     sendTo = req.params.id;
-    const existingRoom = await CreateRoomSchema.findOne({
+    const existingRoom = await RoomSchema.findOne({
       sendBy: sendBy,
       sendTo: sendTo,
     });
@@ -17,14 +17,14 @@ const MessagesRoom = async (req, res) => {
       });
     } else {
       // CREATING NEW ROOM DETAILS
-      const Room_Detail = await CreateRoomSchema({
+      const Room_Detail = await RoomSchema({
         sendBy: sendBy,
         sendTo: sendTo,
       });
       await Room_Detail.save();
       res.status(201).json({
         success: true,
-        message: "Room Create Successfully...",
+        message: `Room Created Successfully...`,
         RoomId: Room_Detail._id,
       });
     }

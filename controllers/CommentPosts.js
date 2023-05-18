@@ -1,5 +1,6 @@
 const CommentSchema = require("../models/CommentSchema.js");
 const PostsSchema = require("../models/PostSchema.js");
+const { SendNotification } = require("./Notifications.js");
 
 // COMMENTS
 const CommentPosts = async (req, res) => {
@@ -8,6 +9,7 @@ const CommentPosts = async (req, res) => {
     const postId = req.params.postId;
     // SEARCHING POST IN POSTSCHEMA DATABASE
     const existingPost = await PostsSchema.findById(postId);
+    console.log(existingPost, "existing post ");
     if (!existingPost) {
       res.status(404).send("Post not found");
     } else {
@@ -19,6 +21,7 @@ const CommentPosts = async (req, res) => {
       // APPENDING NEW COMMENT DETAILS TO EXISTING POST DATABASE
       existingPost.comments.push(comments_detail);
       await existingPost.save();
+      await SendNotification(comments_detail);
       res.status(200).json({ success: true, message: "Your Comment Saved..." });
     }
   } catch (error) {

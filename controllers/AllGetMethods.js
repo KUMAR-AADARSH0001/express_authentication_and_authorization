@@ -1,6 +1,6 @@
 const CreateGroupSchema = require("../models/CreateGroupSchema.js");
 const PostSchema = require("../models/PostSchema.js");
-const RoomMessageSchema = require("../models/CreateRoomSchema.js");
+const RoomMessageSchema = require("../models/RoomSchema.js");
 const userModel = require("../models/UserSchema.js");
 
 // GETTING ALL USERS

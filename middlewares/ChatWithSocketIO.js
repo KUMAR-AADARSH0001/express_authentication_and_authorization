@@ -1,29 +1,34 @@
 const { Server } = require("socket.io");
-const CreateRoomSchema = require("../models/CreateRoomSchema.js");
+const RoomSchema = require("../models/RoomSchema.js");
+const SECRET_KEY = "NOTESAPI";
 
 // CREATING CHAT SERVER WITH SOCKET.IO
 const ChatWithSocketIO = async (data) => {
   try {
+    // await verify_token();
     const io = new Server(data);
     io.on("connection", async (socket) => {
       console.log("User connected");
-      const { id } = socket.handshake.query;
-      const existingRoom = await CreateRoomSchema.find({ _id: id });
-      console.log(existingRoom);
+      const { RoomId } = socket.handshake.query;
+      const token = socket.request.headers.access_token;
+      try {
+        const decoded = jwt.verify(token, SECRET_KEY);
+        SenderId = decoded.id;
+        console.log(SenderId);
+      } catch (error) {
+        console.error("Error decoding JWT:", error);
+      }
+      // FINDING ROOM IN DATABASE
+      const existingRoom = await RoomSchema.find({ _id: RoomId });
+      // FETCING MSG ARRAY
       const Add_Msg = existingRoom[0].messages;
-      console.log(Add_Msg);
       // SENDING MESSAGE
       socket.on("Send", async (data) => {
-        console.log("Message Send:", data);
         // APPENDING NEW MESSAGE IN EXISTING MSG ARRAY
-        Add_Msg.push({ msg: data, time: Date() });
-        console.log("message saved");
-        // console.log(existingRoom);
-        console.log(existingRoom[0].messages);
+        Add_Msg.push({ id: SenderId, msg: data, time: Date() });
         io.emit("Receive", data);
-        console.log(existingRoom, "existingRoom");
         await existingRoom[0].save();
-        // SEND MESSAGE TO ALL CONNECTING CLIENT
+        console.log(existingRoom);
       });
       // USER DISCONNECT WHEN CLOSED
       socket.on("disconnect", () => {

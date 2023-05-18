@@ -1,16 +1,16 @@
-const CreateGroupRoomSchema = require("../models/CreateRoomSchema.js");
+const GroupRoomSchema = require("../models/GroupRoomSchema.js");
 
 //  MESSAGE CONTROLER
 const GroupMessagesRoom = async (req, res) => {
   try {
     const Admin = req.payload.id;
     const GroupName = req.body.groupname;
-    const existingGroupRoom = await CreateGroupRoomSchema.find({
+    const existingGroupRoom = await GroupRoomSchema.find({
       groupname: GroupName,
     });
     if (existingGroupRoom.length === 0) {
       // CREATING NEW GROUP WITH TAKING VALUE FROM REQ.BODY
-      const group_detail = new CreateGroupRoomSchema({
+      const group_detail = new GroupRoomSchema({
         groupname: GroupName,
         admin: Admin,
         memmbers: req.body.memmbers,
@@ -20,7 +20,7 @@ const GroupMessagesRoom = async (req, res) => {
       await group_detail.save();
       res.status(200).json({
         success: true,
-        message: "Your Group Room Saved...",
+        message: "Your Group Room Created...",
         RoomId: group_detail._id,
       });
     } else {
