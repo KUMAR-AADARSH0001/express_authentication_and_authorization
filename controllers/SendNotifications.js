@@ -8,8 +8,7 @@ const SendNotification = async (req, res) => {
       message: req.body.message,
       recieverId: req.body.recieverId,
     });
-    console.log(SN_Details);
-    // await SN_Details.save();
+    await SN_Details.save();
     res.status(200).json({
       success: true,
       message: SN_Details.message,
