@@ -9,7 +9,6 @@ const LikePosts = async (req, res) => {
     const likerId = req.payload.id;
     // SEARCHING POST FROM POSTSCHEMA DATABASE
     const existingPost = await PostsSchema.findById(postId);
-    console.log(existingPost);
     if (!existingPost) {
       res.status(404).send("Post not found");
     } else {
@@ -18,7 +17,6 @@ const LikePosts = async (req, res) => {
         // RETRIEVING ALL LIKE FROM ARRAY
         for (let all = 0; all < existingPost.likes.length; all++) {
           if (existingPost.likes[all].likedby !== likerId) {
-            console.log("second if exicute");
             // CREATING NEW LIKE WITH TAKING VALUE FROM REQ.BODY
             const likes_detail = new LikeSchema({
               likedby: likerId,
@@ -30,7 +28,6 @@ const LikePosts = async (req, res) => {
               .status(200)
               .json({ success: true, message: "Your Like Saveed..." });
           } else {
-            console.log("seond else ");
             // EMPLIMENT REMOVE FROM DATABASE HERRE
             existingPost.likes.splice(all, 1);
             await existingPost.save();
@@ -40,7 +37,6 @@ const LikePosts = async (req, res) => {
           }
         }
       } else {
-        console.log("first else");
         // CREATING NEW LIKE WITH TAKING VALUE FROM REQ.BODY
         const likes_detail = new LikeSchema({
           likedby: likerId,
@@ -52,8 +48,7 @@ const LikePosts = async (req, res) => {
       }
     }
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({ success: false, message: "Server Error" });
   }
 };
 

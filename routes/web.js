@@ -20,7 +20,8 @@ const {
   GetAllRooms,
   GetAllGroups,
 } = require("../controllers/AllGetMethods.js");
-const { SendNotification } = require("../controllers/Notifications.js");
+const { SendNotification } = require("../controllers/SendNotifications.js");
+const { SendMail } = require("../controllers/SendMail.js");
 
 // ALL ROUTES OF APPLICATION
 userRoutes.post("/signup", SignUP);
@@ -39,6 +40,7 @@ userRoutes.get("/allusers", GetAllUsers);
 userRoutes.get("/allposts", GetAllPosts);
 userRoutes.get("/allrooms", GetAllRooms);
 userRoutes.get("/allgroups", GetAllGroups);
-// userRoutes.all("/send-notification", SendNotification);
+userRoutes.post("/send-mail", SendMail);
+userRoutes.all("/send-notification", verify_token, SendNotification);
 
 module.exports = userRoutes;

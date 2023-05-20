@@ -14,7 +14,6 @@ const ChatWithSocketIO = async (data) => {
       try {
         const decoded = jwt.verify(token, SECRET_KEY);
         SenderId = decoded.id;
-        console.log(SenderId);
       } catch (error) {
         console.error("Error decoding JWT:", error);
       }
@@ -28,7 +27,6 @@ const ChatWithSocketIO = async (data) => {
         Add_Msg.push({ id: SenderId, msg: data, time: Date() });
         io.emit("Receive", data);
         await existingRoom[0].save();
-        console.log(existingRoom);
       });
       // USER DISCONNECT WHEN CLOSED
       socket.on("disconnect", () => {

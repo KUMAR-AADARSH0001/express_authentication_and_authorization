@@ -31,7 +31,10 @@ const ChangePassword = async (req, res) => {
     }
   } catch (error) {
     // IF ANYTHING GOT WRONG IT WILL RETURN
-    res.status(500).json({ message: "Somthing went wrong" });
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 

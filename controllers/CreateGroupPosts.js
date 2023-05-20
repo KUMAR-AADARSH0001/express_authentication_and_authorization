@@ -28,14 +28,12 @@ const CreateGroupPosts = async (req, res, next) => {
     }
     for (let creater = 0; creater < allMemmbers.length; creater++) {
       if (userId === allMemmbers[creater]) {
-        console.log("true");
         break;
       } else {
-        console.log("false");
         break;
       }
     }
-    res.status(200).json({ message: "Verify" });
+    res.status(200).json({ message: "Verifyed" });
   } catch (error) {
     console.log(error);
     res.status(400).json({

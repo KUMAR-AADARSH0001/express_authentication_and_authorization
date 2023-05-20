@@ -22,7 +22,10 @@ const CreateGroup = async (req, res) => {
       res.status(404).send(`${GroupName} Group Allready exists`);
     }
   } catch (error) {
-    res.status(500).json({ message: "Server Error" });
+    res.status(500).json({
+      success: false,
+      message: "Internal Server Error",
+    });
   }
 };
 
