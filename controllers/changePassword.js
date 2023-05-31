@@ -5,6 +5,7 @@ const bcrypt = require("bcrypt");
 const ChangePassword = async (req, res) => {
   // GETING OLDPASSWORD AND NEWPASSWORD FROM USER INPUT
   const { oldPassword, newPassword } = req.body;
+  console.log(req.body, "ggggggggggg");
   try {
     const email = req.payload.email;
     const existUser = await userModel.findOne({ email: email });

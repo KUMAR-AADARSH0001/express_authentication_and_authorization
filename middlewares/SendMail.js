@@ -20,10 +20,9 @@ const SendMail = async (req, res) => {
       text: req.body.text,
       html: req.body.html,
     });
-    console.log("Message Sent %s", info.messageId);
     res.status(200).send({
       success: true,
-      message: "This is a mail",
+      message: "Mail Sent Successfully...",
       messageId: info.messageId,
     });
   } catch (error) {

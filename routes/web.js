@@ -1,6 +1,6 @@
 const express = require("express");
 const userRoutes = express.Router();
-const { SignUP } = require("../controllers/SignUP.js");
+const { SignUP } = require("../controllers/signUP.js");
 const { SignIN } = require("../controllers/SignIN.js");
 const { ChangePassword } = require("../controllers/ChangePassword.js");
 const { ResetPassword } = require("../controllers/ResetPassword.js");
@@ -21,7 +21,9 @@ const {
   GetAllGroups,
 } = require("../controllers/AllGetMethods.js");
 const { SendNotification } = require("../controllers/SendNotifications.js");
-const { SendMail } = require("../controllers/SendMail.js");
+const { SendMail } = require("../middlewares/SendMail.js");
+const { GetAllManagers } = require("../controllers/FindAllManagers.js");
+const { UpdateUser } = require("../controllers/UpdateUser.js");
 
 // ALL ROUTES OF APPLICATION
 userRoutes.post("/signup", SignUP);
@@ -42,5 +44,7 @@ userRoutes.get("/allrooms", GetAllRooms);
 userRoutes.get("/allgroups", GetAllGroups);
 userRoutes.post("/send-mail", SendMail);
 userRoutes.all("/send-notification", verify_token, SendNotification);
+userRoutes.get("/all-managers", GetAllManagers);
+userRoutes.put("/update-user/:id", UpdateUser);
 
 module.exports = userRoutes;

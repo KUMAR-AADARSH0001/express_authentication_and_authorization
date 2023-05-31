@@ -1,12 +1,13 @@
 const userModel = require("../models/UserSchema.js");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const SECRET_KEY = "NOTESAPI";
+const SECRET_KEY =
+  "$MY-%-FISRT-%-PROJECT-%-OF-%-LEARNING-%-ABOUT-%-APIs&EXPRESS$";
 
 // SIGNUP
 const SignUP = async (req, res) => {
   // GETTING USERNAME, EMAIL, PASSWORD FROM BODY
-  const { username, email, password } = req.body;
+  const { firstname, lastname, email, password, is_role } = req.body;
   try {
     existUser = await userModel.findOne({ email: req.body.email });
     // CHECKING USER IS EXISTING USER OR NOT
@@ -17,12 +18,17 @@ const SignUP = async (req, res) => {
     const hashPassword = await bcrypt.hash(password, 12);
     // CREATING USER FROM THEIR GIVING DETAILS
     const result = await userModel.create({
-      username: username,
+      firstname: firstname,
+      lastname: lastname,
       email: email,
       password: hashPassword,
+      is_role: is_role,
     });
     // CREATING TOKEN FOR USER TO SINGUP
-    const token = jwt.sign({ email: result.email, id: result._id }, SECRET_KEY);
+    const token = jwt.sign(
+      { id: result._id, email: result.email, is_role: result.is_role },
+      SECRET_KEY
+    );
     res.status(201).json({
       user: result,
       token: token,
