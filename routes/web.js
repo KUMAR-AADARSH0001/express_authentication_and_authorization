@@ -24,6 +24,13 @@ const { SendNotification } = require("../controllers/SendNotifications.js");
 const { SendMail } = require("../middlewares/SendMail.js");
 const { GetAllManagers } = require("../controllers/FindAllManagers.js");
 const { UpdateUser } = require("../controllers/UpdateUser.js");
+const { SendFriendRequest } = require("../controllers/SendFriendRequest.js");
+const {
+  AcceptFriendRequest,
+} = require("../controllers/AcceptFriendRequest.js");
+const { BlockUser } = require("../controllers/BlockUser.js");
+const { UnblockUser } = require("../controllers/UnblockUser.js");
+const { ReportUser } = require("../controllers/ReportUser.js");
 
 // ALL ROUTES OF APPLICATION
 userRoutes.post("/signup", SignUP);
@@ -38,13 +45,18 @@ userRoutes.post("/creategroup", verify_token, CreateGroup);
 userRoutes.post("/creategroupposts/:groupId", verify_token, CreateGroupPosts);
 userRoutes.post("/createroom/:id", verify_token, MessagesRoom);
 userRoutes.post("/creategrouproom", verify_token, GroupMessagesRoom);
-userRoutes.get("/allusers", GetAllUsers);
-userRoutes.get("/allposts", GetAllPosts);
-userRoutes.get("/allrooms", GetAllRooms);
-userRoutes.get("/allgroups", GetAllGroups);
+userRoutes.get("/all-users", GetAllUsers);
+userRoutes.get("/all-posts", GetAllPosts);
+userRoutes.get("/all-rooms", GetAllRooms);
+userRoutes.get("/all-groups", GetAllGroups);
 userRoutes.post("/send-mail", SendMail);
 userRoutes.all("/send-notification", verify_token, SendNotification);
 userRoutes.get("/all-managers", GetAllManagers);
 userRoutes.put("/update-user/:id", UpdateUser);
+userRoutes.post("/send-friend-request/:id", verify_token, SendFriendRequest);
+userRoutes.post("/accept-friend-request", verify_token, AcceptFriendRequest);
+userRoutes.post("/block-user/:id", verify_token, BlockUser);
+userRoutes.post("/unblock-user/:id", verify_token, UnblockUser);
+userRoutes.post("/report-user/:id", verify_token, ReportUser);
 
 module.exports = userRoutes;
