@@ -5,7 +5,7 @@ const SendFriendRequest = async (req, res) => {
   const senderId = req.payload._id;
   const receiverId = req.params.id;
   try {
-    const existUser = await userModel.findOne({ _id: receiverId });
+    const existUser = await userModel.findById({ _id: receiverId });
     if (!existUser) {
       return res.status(400).json({ message: "User Not Exists" });
     } else {

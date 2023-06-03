@@ -29,7 +29,6 @@ const {
   AcceptFriendRequest,
 } = require("../controllers/AcceptFriendRequest.js");
 const { BlockUser } = require("../controllers/BlockUser.js");
-const { UnblockUser } = require("../controllers/UnblockUser.js");
 const { ReportUser } = require("../controllers/ReportUser.js");
 
 // ALL ROUTES OF APPLICATION
@@ -56,7 +55,6 @@ userRoutes.put("/update-user/:id", UpdateUser);
 userRoutes.post("/send-friend-request/:id", verify_token, SendFriendRequest);
 userRoutes.post("/accept-friend-request", verify_token, AcceptFriendRequest);
 userRoutes.post("/block-user/:id", verify_token, BlockUser);
-userRoutes.post("/unblock-user/:id", verify_token, UnblockUser);
 userRoutes.post("/report-user/:id", verify_token, ReportUser);
 
 module.exports = userRoutes;

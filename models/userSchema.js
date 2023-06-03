@@ -8,9 +8,6 @@ const userModel = mongoose.Schema(
     password: { type: String, required: true },
     is_role: { type: String, required: true },
     is_verified: { type: String, default: false },
-    friendlist: [],
-    blocklist: [],
-    reportedby: [],
   },
   { timestamps: true }
 );
