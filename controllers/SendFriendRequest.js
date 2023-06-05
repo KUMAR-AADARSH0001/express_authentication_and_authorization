@@ -3,6 +3,7 @@ const FriendRequestSchema = require("../models/FriedRequetSchema.js");
 
 const SendFriendRequest = async (req, res) => {
   const senderId = req.payload._id;
+  console.log(senderId);
   const receiverId = req.params.id;
   try {
     const existUser = await userModel.findById({ _id: receiverId });
@@ -18,6 +19,7 @@ const SendFriendRequest = async (req, res) => {
           senderId: senderId,
           receiverId: receiverId,
         });
+        result.save();
         return res.status(200).json({ message: "Friend Request Sent" });
       } else {
         return res

@@ -1,25 +1,27 @@
 const userModel = require("../models/UserSchema.js");
 const FriendRequestSchema = require("../models/FriedRequetSchema.js");
+const FriendListSchema = require("../models/FriendListSchema.js");
 
 const AcceptFriendRequest = async (req, res) => {
   try {
     const userId = req.payload._id;
-    console.log(userId);
     existUser = await userModel.findById({ _id: userId });
-    console.log(existUser);
-    const friendlist = existUser.friendlist;
-    console.log(friendlist);
-    // CHECKING USER IS EXISTING USER OR NOT
     if (!existUser) {
       return res.status(400).json({ message: "User Not Exists" });
     } else {
-      const request = await FriendRequestSchema.find();
-      console.log(request);
-      // for (let i = 0; i < request.length; i++) {
-      //   console.log(request[i]);
-      //   // existUser.friendlist.push(request[i]);
-      //   console.log("pushed alll");
-      // }
+      const requestlist = await FriendRequestSchema.find({
+        receiverId: userId,
+      });
+      for (let request = 0; request < requestlist.length; request++) {
+        console.log(requestlist[request]);
+        const senderId = requestlist[request].senderId;
+        console.log(senderId);
+        const result = await FriendListSchema.create({
+          userId: userId,
+          friendId: senderId,
+        });
+        result.save();
+      }
       return res.status(200).json({ message: "Request Accepted..." });
     }
   } catch (error) {

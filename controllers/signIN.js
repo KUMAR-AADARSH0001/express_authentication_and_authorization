@@ -21,7 +21,8 @@ const SignIN = async (req, res) => {
     });
     if (userreported.length >= 2) {
       res.status(500).json({
-        message: "Your Id Reported By 2 or More So you Cant Login This Time",
+        message:
+          "Your Id Reported By 2 or More Users So you Cant Login This Time",
       });
     } else {
       // COMPARING HASHPASSWORD TO USER INPUT PASSWORD TO COMPARE FROM DATABASE
