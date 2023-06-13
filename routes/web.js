@@ -30,6 +30,12 @@ const {
 } = require("../controllers/AcceptFriendRequest.js");
 const { BlockUser } = require("../controllers/BlockUser.js");
 const { ReportUser } = require("../controllers/ReportUser.js");
+const {
+  CreatePaypalPayment,
+} = require("../paymentgateway/PaypalPaymentGateway.js");
+const {
+  CreateSquareUPPayment,
+} = require("../paymentgateway/SquarePaymentGateway.js");
 
 // ALL ROUTES OF APPLICATION
 userRoutes.post("/signup", SignUP);
@@ -56,5 +62,7 @@ userRoutes.post("/send-friend-request/:id", verify_token, SendFriendRequest);
 userRoutes.post("/accept-friend-request", verify_token, AcceptFriendRequest);
 userRoutes.post("/block-user/:id", verify_token, BlockUser);
 userRoutes.post("/report-user/:id", verify_token, ReportUser);
+userRoutes.get("/paypal-payment", CreatePaypalPayment);
+userRoutes.get("/squareup-payment", CreateSquareUPPayment);
 
 module.exports = userRoutes;
